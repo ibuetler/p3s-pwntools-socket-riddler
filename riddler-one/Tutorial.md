@@ -5,25 +5,35 @@ This challenge is about interacting with a web service in Python3 using [pwntool
  - Use pwntools sockets library
  - Automate the interaction with a web service
 
-# Preparation
+## Tasks
+* Task1: Analyze Riddler Service on port `2223`
+* Task2: Automation Riddler Solver
+
+# Analyzing Riddler
 ## Step 1
 
-### Start the Resource
-Start the *Riddlers Legacy One* resource above.
+### Resource
+* Get the name of the service from `RESOURCES?`
+* the riddler service is running on port `2223`
 
-![How to start the Riddler-service](../../assets/riddler-one//riddler-start.png?raw=true)
 
 ## Step 2
-### Analyse the Riddler
-#### Service Overview
+### Analyse the Riddler Service
+Riddler is a network services that is listening on port `2223`. 
 
-![Riddler service diagram](../../assets/riddler-one//service-overview.png?raw=true)
+![service-overview.png](/media/challenge/png/e6baaba7-65b1-45bd-ad73-bff3ccb11de9.png)
 
-#### Manual Connection
-Before you start to write some code make yourself familiar with the responses of *Riddler 1* by using telnet:
+#### Testing manually the Connection
+Before we start to write some code, we should make ourself familiar with the responses of *Riddler 1* by using `telnet` or `netcat`:
 
 ``` python
 telnet [IP-Address] [Port]
+telnet riddler.vm.vuln.land 2223
+```
+
+``` python
+nc -v [IP-Address] [Port]
+nc -v riddler.vm.vuln.land 2223
 ```
 
 The riddler will respond in the following format: 
@@ -44,7 +54,7 @@ The Riddler is sending its challenges encrypted using a symmetric encryption alg
 
 The Caesar cipher is a monoalphabetic cipher which is based on a simple substitution of the characters by shifting each character the same amount over the alphabet.
 
-![Caesar Shift](../../assets/riddler-one//caesar-shift.png?raw=true)
+![service-overview.png](/media/challenge/png/6625944d-4350-4fac-887f-54d30e085b51.png)
 
 By using *"Analysis > Symmetric Encryption (classic) > Ciphertext-Only > Caesar"* decrypting is straight forward and leads to the key **Q** that correlates with a right-shift over the alphabet by **16**. You can simply align the plain-text alphabet starting at "A" with the cipher-text alphabet starting at "Q".
 This means "Q" in the cipher-text was an "A" initially and "D" was an "N".
@@ -105,7 +115,7 @@ def CAESAR(challenge):
      cipher.translate(mapping)
      ```
 
-# Automation
+# Automation Riddler Solver
 As the service expects your answer very quickly there's no way to manually decrypt the cipher and respond with the solution. Therefore you'll have to automate the whole process using Python3.
 
 **Hint:** The service always responds in **UPPERCASE** and the alphabet is **Latin**, therefore the alphabet includes **ABCDEFGHIJKLMNOPQRSTUVWXYZ**. Keep this in mind when you are writing your function.

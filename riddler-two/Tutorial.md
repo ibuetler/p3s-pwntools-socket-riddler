@@ -5,35 +5,40 @@ This challenge is about interacting with a web service in Python3 using [pwntool
 *Riddlers Legacy Two* follows the same principle as *Riddlers Legacy One* but with a variety of challenges. You'll write several functions solving different crypto puzzles similar to *Riddlers Legacy One*
 
 ## Learn how to ...
-
  - Use pwntools sockets library
  - Automate the interaction with a web service
- - Solve crypto puzzles programmatically
 
-# Preparation
+## Tasks
+* Task1: Analyze Riddler Service on port `2224`
+* Task2: Automation Riddler Solver
 
+# Analyzing Riddler
 ## Step 1
 
-### Start the Resource
+### Resource
+* Get the name of the service from `RESOURCES?`
+* the riddler service is running on port `2224`
 
-Start the *Riddlers Legacy Two* resource above.
-
-![How to start the Riddler-service](../../assets/riddler-two/riddler-start.png?raw=true)
 
 ## Step 2
+### Analyse the Riddler Service
+Riddler is a network services that is listening on port `2224`. 
 
-### Analyse the Riddler
+![service-overview.png](/media/challenge/png/e6baaba7-65b1-45bd-ad73-bff3ccb11de9.png)
 
-#### Service Overview
-
-![Riddler service diagram](../../assets/riddler-two/service-overview.png?raw=true)
 
 #### Manual Connection
 
-Before you start to write some code make yourself familiar with the responses of *Riddlers Legacy Two* by using telnet:
+Before we start to write some code, we should make ourself familiar with the responses of *Riddler Two* by using `telnet` or `netcat`:
 
 ``` python
 telnet [IP-Address] [Port]
+telnet riddler.vm.vuln.land 2224
+```
+
+``` python
+nc -v [IP-Address] [Port]
+nc -v riddler.vm.vuln.land 2224
 ```
 
 The riddler will respond in the following format: 
@@ -56,7 +61,7 @@ In total *Riddlers Legacy Two* sends nine different challenge types which are id
 |      7       |       Vigenere       | jdk:flbngc                                                   | wireds           |
 |      8       |         XOR          | j:BAMJAQYP                                                   | nickle           |
 
-# Challenge theory
+# Challenge Theory
 
 All challenge types are explained independently. For each challenge type, you'll have to write a function that takes the specific challenge as a parameter and returns the solution to it. 
 
@@ -68,7 +73,7 @@ The [*American Standard Code for Information Interchange*]([https://en.wikipedia
 
 You can solve the ASCII challenge by simply converting either two or three digits of the number to it's ASCII equivalent. You know if a character is encoded in three digits if the number starts with 1. 
 
-![ASCII table](../../assets/riddler-two/ascii-table.png?raw=true)
+![ASCII table](/media/challenge/png/a2a9c202-2ab9-4266-a23f-fa22acf0afa6.png)
 
 ### Example
 
@@ -191,7 +196,7 @@ Base64 is a method to encode 8-bit binary data to a string consisting of codepag
 
 ASCII uses the character `A-Z`, `a-z`, `0-9`, `+` and `/` as well as `=` at the end. For the encoding three bytes of the data-stream are separated in 6-bit-blocks. Each of these blocks represents a number from 0 to 63. These numbers then are converted in *printable ASCII characters* using the table below.
 
-![Base64 table](../../assets/riddler-two/base64-table.png?raw=true)
+![Base64 table](/media/challenge/png/d2c78722-58f9-448b-8258-c9c5751d6dd3.png?raw=true)
 
 ### Example
 
@@ -223,7 +228,7 @@ def solve_base64(challenge):
 
 The Caesar cipher is a monoalphabetic cipher which is based on a simple substitution of the characters by shifting each character the same amount over the alphabet.
 
-![Caesar Shift](../../assets/riddler-two/caesar-shift.png?raw=true)
+![Caesar Shift](/media/challenge/png/6625944d-4350-4fac-887f-54d30e085b51.png?raw=true)
 
 ### Example
 
@@ -293,7 +298,7 @@ def solve_caesar(challenge):
 
 Morse code is an encoding method used in telecommunication. Test characters are encoded as standardized sequences consisting of two different signal durations which are called `dots` and `dashes`.
 
-![Morse Alphabet](../../assets/riddler-two/morse-alphabet.png?raw=true)
+![Morse Alphabet](/media/challenge/png/87900f23-f307-4eba-b54b-6359debc5a46.png?raw=true)
 
 ### Example
 
@@ -445,7 +450,7 @@ def solve_transposition(challenge):
 
 The Vigenère cipher is a polyalphabetic substitution method. The cleartext is split into monograms which are then substituted by the secret-text character which is chosen with the aid of the *Vigenère table*.
 
-![Vigenère square](../../assets/riddler-two/vigenere-square.png?raw=true)
+![Vigenère square](/media/challenge/png/3dc5f164-b002-4a68-b7f1-6c242332ed76.png?raw=true)
 
 ### Example
 
@@ -462,7 +467,7 @@ The left-hand side of the string `jdk` is our key. Write out the cipher and writ
 
 To decipher Vigenère simply mark the row (Y-axis) at the index of the matching key character `j`. Then follow this row horizontally until you reach the cipher character `f`. Now mark this column (X-axis) and voilá the index on the x-axis is your clear-text character `W`. Repeat the previous steps for all characters in your cipher.
 
-![Vigenère square decipher](../../assets/riddler-two/vigenere-square-decipher.png?raw=true)
+![Vigenère square decipher](/media/challenge/png/a68a3ae2-5b84-4302-afa9-bd5c19852a12.png?raw=true)
 
 ### Example
 
@@ -526,7 +531,7 @@ def solve_vigenere(challenge):
 
 Exclusive or is a logical operation indicating that of two given inputs only one of them has the value `true`.
 
-![XOR table](../../assets/riddler-two/xor-table.png?raw=true)
+![XOR table](/media/challenge/png/d2c5d20a-6502-416e-959d-cbc621bea319.png?raw=true)
 
 ### Example
 
