@@ -13,7 +13,7 @@ This challenge is about interacting with a web service in Python3 using [pwntool
 ## Step 1
 
 ### Resource
-* Get the name of the service from `RESOURCES?`
+* Get the name of the service from `RESOURCES`
 * the riddler service is running on port `2223`
 
 
