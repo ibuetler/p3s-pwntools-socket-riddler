@@ -1,13 +1,13 @@
 # Introduction
-This python3 exercise is about interacting with a `socket` service using the commonnly known [pwntools](http://docs.pwntools.com/en/stable/) and it's [sockets library](https://docs.pwntools.com/en/stable/tubes/sockets.html#). 
+This python3 exercise is about interacting with a `socket` service using the commonly known [pwntools](http://docs.pwntools.com/en/stable/) and it's [sockets library](https://docs.pwntools.com/en/stable/tubes/sockets.html#). 
 
 ## Learn how to ...
  - Use pwntools sockets library
  - Automate the interaction with a web service
 
 ## Tasks
-* Task1: Analyze Riddler Service on port `80`
-* Task2: Automation Riddler Solver
+* Task1: Please analyze the Riddler Service on port `80`
+* Task2: Write a Python3 solver for the Riddler One Service
 
 # Analyzing Riddler
 ## Step 1
@@ -132,7 +132,7 @@ mapping = str.maketrans(UC, UC[shift:] + UC[:shift])
 cipher.translate(mapping)
 ```
 
-# Automation Riddler Solver
+# Connection to the Riddler Service
 As the service expects your responses to the riddler puzzles very quickly, there's no way to manually decrypt the cipher and respond with the solution. Therefore you'll have to automate the whole process. Please write a python3 programm that is doing this job for you. 
 
 **Hint:** The service always responds in **UPPERCASE** and the alphabet is **Latin**, therefore the alphabet includes **ABCDEFGHIJKLMNOPQRSTUVWXYZ**. Keep this in mind when you are writing your function.
@@ -184,7 +184,6 @@ except EOFError:
    break 
 ```
 
-## Step 3
-### Finalize your Solver
+## Write a Python3 solver for the Riddler One Service
 Please finalize your work. Write python3 software that is connecting the riddler service using `pwntools` and solving the puzzles using `ceasar` shifts until the riddler service is sending the final string `CONGRATULATION! YOU DID IT!`
 
