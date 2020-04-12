@@ -1,48 +1,62 @@
 # Introduction
-This challenge is about interacting with a web service in Python3 using [pwntools](http://docs.pwntools.com/en/stable/) and it's [sockets library](https://docs.pwntools.com/en/stable/tubes/sockets.html#).
+This python3 exercise is about interacting with a `socket` service using the commonnly known [pwntools](http://docs.pwntools.com/en/stable/) and it's [sockets library](https://docs.pwntools.com/en/stable/tubes/sockets.html#). 
 
 ## Learn how to ...
  - Use pwntools sockets library
  - Automate the interaction with a web service
 
 ## Tasks
-* Task1: Analyze Riddler Service on port `2223`
+* Task1: Analyze Riddler Service on port `80`
 * Task2: Automation Riddler Solver
 
 # Analyzing Riddler
 ## Step 1
 
 ### Resource
-* Get the name of the service from `RESOURCES`
-* the riddler service is running on port `2223`
+* Get the name of the service from `RESOURCES` aka `riddler.vm.vuln.land`
+* the `riddler one` service is running on port `80`
 
 
 ## Step 2
-### Analyse the Riddler Service
-Riddler is a network services that is listening on port `2223`. 
+### Analyse the Riddler One Service
+Riddler is a network services that is listening on port `80`. It is **not** http - but still running on port `80`!
 
 ![service-overview.png](/media/challenge/png/e6baaba7-65b1-45bd-ad73-bff3ccb11de9.png)
+
 
 #### Testing manually the Connection
 Before we start to write some code, we should make ourself familiar with the responses of *Riddler 1* by using `telnet` or `netcat`:
 
 ``` python
 telnet [IP-Address] [Port]
-telnet riddler.vm.vuln.land 2223
+telnet riddler.vm.vuln.land 80
 ```
 
 ``` python
 nc -v [IP-Address] [Port]
-nc -v riddler.vm.vuln.land 2223
+nc -v riddler.vm.vuln.land 80
 ```
 
-The riddler will respond in the following format: 
+The riddler will respond with a "puzzle". 
 
 ``` python
-16:DQDEJUSXDEBEWYUI
+nc -v riddler.vm.vuln.land 80
+Ncat: Version 7.80 ( https://nmap.org/ncat )
+Ncat: Connected to 152.96.6.243:80.
+19:MKTPEXW
+
+nc -v riddler.vm.vuln.land 80
+Ncat: Version 7.80 ( https://nmap.org/ncat )
+Ncat: Connected to 152.96.6.243:80.
+14:SZJWGVSG
+
+nc -v riddler.vm.vuln.land 80
+Ncat: Version 7.80 ( https://nmap.org/ncat )
+Ncat: Connected to 152.96.6.243:80.
+16: DQDEJUSXDEBEWYUI
 ```
 
-As you can see the response is somehow encrypted. Let's start to investigate the cipher furthermore using CrypTools.
+As you can see in the three riddler responsese above, the rsponse is looks encrypted. Let's start to investigate the cipher furthermore using CrypTools.
 
 ## Step 3
 ### Analyse the Riddler Response
@@ -84,7 +98,7 @@ U = E
 I = S
 ```
 ## Step 4
-### Write your Decrypt Function
+### Write your Caesar Decrypt Function
 Write your own *CAESAR* function now which takes the challenge `6:IUTMXGZARGZOUTY` as an argument.
 Your function is expected to return `CONGRATULATIONS`.
 
@@ -97,26 +111,29 @@ def CAESAR(challenge):
 ```
 
 1. Extract the shift from *caesar*
-    ```python
-    shift = caesar.split(':')[0]
-   ```
+```python
+shift = caesar.split(':')[0]
+```
+
 2. Extract the cipher from *caesar*
-      ``` python
-     cipher = caesar.split(':')[1]
-      ```
+``` python
+cipher = caesar.split(':')[1]
+```
+
 3. Create a mapping between the plain-text alphabet and the cipher-text alphabet using [string.maketrans](https://docs.python.org/2/library/string.html?highlight=maketrans#string.maketrans)
-    ```python
-	import string ascii_uppercase as UC
-	
-	mapping = str.maketrans(UC, UC[shift:] + UC[:shift])
-   ```
+```python
+import string ascii_uppercase as UC
+
+mapping = str.maketrans(UC, UC[shift:] + UC[:shift])
+```
+
  4. Decrypt the cipher using the mapping table and [string.translate](https://docs.python.org/2/library/string.html?highlight=translate#string.translate)
-     ``` python
-     cipher.translate(mapping)
-     ```
+``` python
+cipher.translate(mapping)
+```
 
 # Automation Riddler Solver
-As the service expects your answer very quickly there's no way to manually decrypt the cipher and respond with the solution. Therefore you'll have to automate the whole process using Python3.
+As the service expects your responses to the riddler puzzles very quickly, there's no way to manually decrypt the cipher and respond with the solution. Therefore you'll have to automate the whole process. Please write a python3 programm that is doing this job for you. 
 
 **Hint:** The service always responds in **UPPERCASE** and the alphabet is **Latin**, therefore the alphabet includes **ABCDEFGHIJKLMNOPQRSTUVWXYZ**. Keep this in mind when you are writing your function.
 
@@ -131,37 +148,43 @@ from pwn import *
 ## Step 2
 ### Interaction with the service
 1. Create a TCP connection using [sockets](https://docs.pwntools.com/en/stable/tubes/sockets.html) and extend the above script with:
-   ``` python
-   service = remote('[Target IP-Address]', [Target Port])
-   ```
+``` python
+service = remote('[Target IP-Address]', [Target Port])
+```
 2. To receive data from the service you use the *service* object from above:
-   ``` python
-   rawData = service.recvline()
-   ```
+``` python
+rawData = service.recvline()
+```
 3. The data received by the service isn't usable upfront, look at the following response: `'b7:ALEA\n'`. You are only interested in the portion **7:ALEA** but before you can extract the portions you first have to decode the *rawData* by using:
-   ``` python
-   decodedData = rawData.decode('latin-1')
-   ```
+``` python
+decodedData = rawData.decode('latin-1')
+```
 4. Besides, you should consider **replacing** the *'\n'* from *decodedData* with **''** as this could interfere with your *CAESAR* function.
-   ``` python
-   decodedData = decodedData.replace('\n', '')
-   ```
+``` python
+decodedData = decodedData.replace('\n', '')
+```
 
 5. After you've called your *CAESAR* function with the "cleaned" string you now have to send the encrypted text back to the service:
-   ``` python
-   service.sendline(decrypted)
-   ```
+``` python
+service.sendline(decrypted)
+```
 6. As the service responds with the *partial solution* you've accomplished so far print out the response, that way you can follow your Python3 program solving *Riddlers Legacy One*.
-   ``` python
-   print(service.recvline())
-   ```
+``` python
+print(service.recvline())
+```
 7. Keep in mind that you have to continue sending new solutions and receiving new challenges until the service responds with `CONGRATULATION! YOU DID IT!`, as an alternative run `try: except EOFError:` within your loop to stop as soon as the service closes its connection.
-   ``` python
-   while True:
-   	try:
-		# your code goes here
-		
-	except EOFError:
-		print("Connection closed")
-		break 
-   ```
+
+``` python
+while True:
+   try:
+   # your code goes here
+   
+except EOFError:
+   print("Connection closed")
+   break 
+```
+
+## Step 3
+### Finalize your Solver
+Please finalize your work. Write python3 software that is connecting the riddler service using `pwntools` and solving the puzzles using `ceasar` shifts until the riddler service is sending the final string `CONGRATULATION! YOU DID IT!`
+

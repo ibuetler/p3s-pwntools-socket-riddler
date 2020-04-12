@@ -1,15 +1,14 @@
 # Introduction
+This python3 programming exercise is about interacting with a `socket` service using [pwntools](http://docs.pwntools.com/en/stable/) and it's [sockets library](https://docs.pwntools.com/en/stable/tubes/sockets.html#). 
 
-This challenge is about interacting with a web service in Python3 using [pwntools](http://docs.pwntools.com/en/stable/) and it's [sockets library](https://docs.pwntools.com/en/stable/tubes/sockets.html#). 
-
-*Riddlers Legacy Two* follows the same principle as *Riddlers Legacy One* but with a variety of challenges. You'll write several functions solving different crypto puzzles similar to *Riddlers Legacy One*
+*Riddlers Legacy Two* follows the same principle as *Riddlers Legacy One* but with a variety of challenges. You'll need to write several functions solving different crypto puzzles similar to *Riddlers Legacy One*
 
 ## Learn how to ...
  - Use pwntools sockets library
  - Automate the interaction with a web service
 
 ## Tasks
-* Task1: Analyze Riddler Service on port `2224`
+* Task1: Analyze Riddler Service on port `443`
 * Task2: Automation Riddler Solver
 
 # Analyzing Riddler
@@ -17,12 +16,12 @@ This challenge is about interacting with a web service in Python3 using [pwntool
 
 ### Resource
 * Get the name of the service from `RESOURCES`
-* the riddler service is running on port `2224`
+* the riddler service is running on port `443`
 
 
 ## Step 2
 ### Analyse the Riddler Service
-Riddler is a network services that is listening on port `2224`. 
+Riddler is a network services that is listening on port `443`. 
 
 ![service-overview.png](/media/challenge/png/e6baaba7-65b1-45bd-ad73-bff3ccb11de9.png)
 
@@ -33,12 +32,27 @@ Before we start to write some code, we should make ourself familiar with the res
 
 ``` python
 telnet [IP-Address] [Port]
-telnet riddler.vm.vuln.land 2224
+telnet riddler.vm.vuln.land 443
 ```
 
 ``` python
 nc -v [IP-Address] [Port]
-nc -v riddler.vm.vuln.land 2224
+nc -v riddler.vm.vuln.land 443
+```
+
+LOG
+```
+nc riddler.vm.vuln.land 443
+0;8;r:EB0TABY=
+
+nc riddler.vm.vuln.land 443
+0;8;c:AQwWDQAGBw==
+
+nc riddler.vm.vuln.land 443
+0;2;Ym9ndXM=
+
+nc riddler.vm.vuln.land 443
+0;4;..-. .- .-. .- -.. .. --.. . -.. 
 ```
 
 The riddler will respond in the following format: 
@@ -62,13 +76,9 @@ In total *Riddlers Legacy Two* sends nine different challenge types which are id
 |      8       |         XOR          | j:BAMJAQYP                                                   | nickle           |
 
 # Challenge Theory
-
-All challenge types are explained independently. For each challenge type, you'll have to write a function that takes the specific challenge as a parameter and returns the solution to it. 
-
-At the end of **Challenge theory** you're expected to have nine functions created which will be used in the chapter **Automation**.
+All nine challenge types are explained independently. For each challenge type, you'll need to write a function that takes the specific challenge as a parameter and returns the solution to it. At the end of **Challenge Theory** you're expected to have nine functions created which will be used in the chapter **Automation**.
 
 ## ASCII Challenge
-
 The [*American Standard Code for Information Interchange*]([https://en.wikipedia.org/wiki/ASCII](https://en.wikipedia.org/wiki/ASCII)) is a 7-bit character encoding. ASCII defines 127 characters consisting of 33 unprintable and 95 printable characters.
 
 You can solve the ASCII challenge by simply converting either two or three digits of the number to it's ASCII equivalent. You know if a character is encoded in three digits if the number starts with 1. 
@@ -669,3 +679,8 @@ from pwn import *
    	   print("Connection closed")
    	   break 
    ```
+
+## Step 3
+### Finalize your Solver
+Please finalize your work. Write python3 software that is connecting the riddler service using `pwntools` and solving the puzzles using your `challenge solvers`  until the riddler service is sending the final string `CONGRATULATION! YOU DID IT!`
+
