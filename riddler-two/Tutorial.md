@@ -1,15 +1,22 @@
 # Introduction
 This python3 programming exercise is about interacting with a `socket` service using [pwntools](http://docs.pwntools.com/en/stable/) and it's [sockets library](https://docs.pwntools.com/en/stable/tubes/sockets.html#). 
 
-*Riddlers Legacy Two* follows the same principle as *Riddlers Legacy One* but with a variety of challenges. You'll need to write several functions solving different crypto puzzles similar to *Riddlers Legacy One*
+```
++-----------------+            +----------------------+
+| python3 program +----------->+riddler 1 on port 443 |
++-----------------+            +----------------------+
+```
+
+*Riddlers Legacy Two* follows the same principle as *Riddlers Legacy One* but with more than just solving a caesar cipher. You'll need to write several functions solving different crypto puzzles similar to *Riddlers Legacy One*
+
 
 ## Learn how to ...
  - Use pwntools sockets library
  - Automate the interaction with a web service
 
 ## Tasks
-* Task1: Analyze Riddler Service on port `443`
-* Task2: Automation Riddler Solver
+* Task 1: Please analyze the Riddler Service on port `443`
+* Task 2: Write a Python3 solver for the Riddler One Service
 
 # Analyzing Riddler
 ## Step 1
@@ -20,8 +27,8 @@ This python3 programming exercise is about interacting with a `socket` service u
 
 
 ## Step 2
-### Analyse the Riddler Service
-Riddler is a network services that is listening on port `443`. 
+### Analysis of Riddler Two Service
+Riddler is a network services that is listening on port `443`. It is **not** https - but still running on port `443`!
 
 ![service-overview.png](/media/challenge/png/e6baaba7-65b1-45bd-ad73-bff3ccb11de9.png)
 
