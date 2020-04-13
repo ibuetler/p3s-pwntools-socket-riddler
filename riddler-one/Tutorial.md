@@ -2,9 +2,9 @@
 This python3 exercise is about interacting with a `socket` service using the commonly known [pwntools](http://docs.pwntools.com/en/stable/) and it's [sockets library](https://docs.pwntools.com/en/stable/tubes/sockets.html#). 
 
 ```
-+-----------------+            +---------------------+
-| python3 program +----------->+riddler 1 on port 80 |
-+-----------------+            +---------------------+
++-----------------+            +----------------------+
+| python3 program +----------->+ riddler 1 on port 80 |
++-----------------+            +----------------------+
 ```
 
 ## Learn how to ...
@@ -46,16 +46,19 @@ nc -v riddler.vm.vuln.land 80
 The riddler will respond with a "puzzle". 
 
 ``` python
+========= 1 ==========
 nc -v riddler.vm.vuln.land 80
 Ncat: Version 7.80 ( https://nmap.org/ncat )
 Ncat: Connected to 152.96.6.243:80.
 19:MKTPEXW
 
+========= 3 ==========
 nc -v riddler.vm.vuln.land 80
 Ncat: Version 7.80 ( https://nmap.org/ncat )
 Ncat: Connected to 152.96.6.243:80.
 14:SZJWGVSG
 
+========= 3 ==========
 nc -v riddler.vm.vuln.land 80
 Ncat: Version 7.80 ( https://nmap.org/ncat )
 Ncat: Connected to 152.96.6.243:80.
@@ -117,26 +120,26 @@ def CAESAR(challenge):
 ```
 
 1. Extract the shift from *caesar*
-```python
-shift = caesar.split(':')[0]
-```
+   ```python
+   shift = caesar.split(':')[0]
+   ```
 
 2. Extract the cipher from *caesar*
-``` python
-cipher = caesar.split(':')[1]
-```
+   ``` python
+   cipher = caesar.split(':')[1]
+   ```
 
 3. Create a mapping between the plain-text alphabet and the cipher-text alphabet using [string.maketrans](https://docs.python.org/2/library/string.html?highlight=maketrans#string.maketrans)
-```python
-import string ascii_uppercase as UC
+   ```python
+   import string ascii_uppercase as UC
 
-mapping = str.maketrans(UC, UC[shift:] + UC[:shift])
-```
+   mapping = str.maketrans(UC, UC[shift:] + UC[:shift])
+   ```
 
  4. Decrypt the cipher using the mapping table and [string.translate](https://docs.python.org/2/library/string.html?highlight=translate#string.translate)
-``` python
-cipher.translate(mapping)
-```
+   ``` python
+   cipher.translate(mapping)
+   ```
 
 # Connection to the Riddler Service
 As the service expects your responses to the riddler puzzles very quickly, there's no way to manually decrypt the cipher and respond with the solution. Therefore you'll have to automate the whole process. Please write a python3 programm that is doing this job for you. 
@@ -146,10 +149,10 @@ As the service expects your responses to the riddler puzzles very quickly, there
 ## Step 1
 To start using *pwntools* you can just import `pwn` as follows:
 
-``` python
-#!/usr/bin/env python
-from pwn import *
-```
+   ``` python
+   #!/usr/bin/env python
+   from pwn import *
+   ```
 
 ## Step 2
 ### Interaction with the service

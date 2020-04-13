@@ -2,9 +2,9 @@
 This python3 programming exercise is about interacting with a `socket` service using [pwntools](http://docs.pwntools.com/en/stable/) and it's [sockets library](https://docs.pwntools.com/en/stable/tubes/sockets.html#). 
 
 ```
-+-----------------+            +----------------------+
-| python3 program +----------->+riddler 1 on port 443 |
-+-----------------+            +----------------------+
++-----------------+            +-----------------------+
+| python3 program +----------->+ riddler 2 on port 443 |
++-----------------+            +-----------------------+
 ```
 
 *Riddlers Legacy Two* follows the same principle as *Riddlers Legacy One* but with more than just solving a caesar cipher. You'll need to write several functions solving different crypto puzzles similar to *Riddlers Legacy One*
@@ -49,20 +49,24 @@ nc -v riddler.vm.vuln.land 443
 
 LOG
 ```
+========= 1 ==========
 nc riddler.vm.vuln.land 443
 0;8;r:EB0TABY=
 
+========= 2 ==========
 nc riddler.vm.vuln.land 443
 0;8;c:AQwWDQAGBw==
 
+========= 3 ==========
 nc riddler.vm.vuln.land 443
 0;2;Ym9ndXM=
 
+========= 4 ==========
 nc riddler.vm.vuln.land 443
 0;4;..-. .- .-. .- -.. .. --.. . -.. 
 ```
 
-The riddler will respond in the following format: 
+The riddler 2 will respond in the following format: 
 
 ```
 [level];[challenge ID];[challenge]
@@ -401,17 +405,19 @@ transposition = "8:pordise0s0t0h0o0"
 
 The *8* indicates the number of *columns* used in the cipher. The trailing **zeros** are just used as a padding.
 
+```
 |       |  0   |  1   |  2   |  3   |  4   |  5   |  6   |  7   |
 | :---: | :--: | :--: | :--: | :--: | :--: | :--: | :--: | :--: |
 | **0** |  p   |  r   |  i   |  e   |  s   |  t   |  h   |  o   |
 | **1** |  o   |  d   |  s   |  0   |  0   |  0   |  0   |  0   |
-
+```
 To get the cipher-text eg. encrypt just read column by column from the above example `pordise0s0t0h0o0`.
 
 
 
 To decrypt the cipher use the key *8* as the number of rows. By dividing the cipher's length by two you can calculate the number of columns needed. `16 / 8 = 2`
 
+```
 |       |  0   |  1   |
 | :---: | :--: | :--: |
 | **0** |  p   |  o   |
@@ -422,7 +428,7 @@ To decrypt the cipher use the key *8* as the number of rows. By dividing the cip
 | **5** |  t   |  0   |
 | **6** |  h   |  0   |
 | **7** |  o   |  0   |
-
+```
 
 
 1. Extract the *key* from *transposition*
