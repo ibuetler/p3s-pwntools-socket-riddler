@@ -30,7 +30,6 @@ This python3 programming exercise is about interacting with a `socket` service u
 ### Analysis of Riddler Two Service
 Riddler is a network services that is listening on port `443`. It is **not** https - but still running on port `443`!
 
-![service-overview.png](/media/challenge/png/e6baaba7-65b1-45bd-ad73-bff3ccb11de9.png)
 
 
 #### Manual Connection
@@ -94,7 +93,7 @@ The [*American Standard Code for Information Interchange*]([https://en.wikipedia
 
 You can solve the ASCII challenge by simply converting either two or three digits of the number to it's ASCII equivalent. You know if a character is encoded in three digits if the number starts with 1. 
 
-![ASCII table](/media/challenge/png/a2a9c202-2ab9-4266-a23f-fa22acf0afa6.png)
+![ASCII table](/media/challenge/png/a2a9c202-2ab9-4266-a23f-ac4f9e9a-a2b0-47a6-8930-637d87af6444.png)
 
 ### Example
 
@@ -217,7 +216,7 @@ Base64 is a method to encode 8-bit binary data to a string consisting of codepag
 
 ASCII uses the character `A-Z`, `a-z`, `0-9`, `+` and `/` as well as `=` at the end. For the encoding three bytes of the data-stream are separated in 6-bit-blocks. Each of these blocks represents a number from 0 to 63. These numbers then are converted in *printable ASCII characters* using the table below.
 
-![Base64 table](/media/challenge/png/d2c78722-58f9-448b-8258-c9c5751d6dd3.png?raw=true)
+![Base64 table](/media/challenge/png/d2c78722-58f9-448b-8258-c963e616-ff29-4181-9d76-f29b5c401791.png?raw=true)
 
 ### Example
 
@@ -249,7 +248,7 @@ def solve_base64(challenge):
 
 The Caesar cipher is a monoalphabetic cipher which is based on a simple substitution of the characters by shifting each character the same amount over the alphabet.
 
-![Caesar Shift](/media/challenge/png/6625944d-4350-4fac-887f-54d30e085b51.png?raw=true)
+![Caesar Shift](/media/challenge/png/6625944d-4350-4fac-887f-35e6a7ea-bc91-4d56-b191-c4cd50ac751c.png?raw=true)
 
 ### Example
 
@@ -319,7 +318,7 @@ def solve_caesar(challenge):
 
 Morse code is an encoding method used in telecommunication. Test characters are encoded as standardized sequences consisting of two different signal durations which are called `dots` and `dashes`.
 
-![Morse Alphabet](/media/challenge/png/87900f23-f307-4eba-b54b-6359debc5a46.png?raw=true)
+![Morse Alphabet](/media/challenge/png/87900f23-f307-4eba-b54b-a9484724-0df4-44be-b19f-e991df1c41d6.png?raw=true)
 
 ### Example
 
@@ -473,7 +472,7 @@ def solve_transposition(challenge):
 
 The Vigenère cipher is a polyalphabetic substitution method. The cleartext is split into monograms which are then substituted by the secret-text character which is chosen with the aid of the *Vigenère table*.
 
-![Vigenère square](/media/challenge/png/3dc5f164-b002-4a68-b7f1-6c242332ed76.png?raw=true)
+![Vigenère square](/media/challenge/png/3dc5f164-b002-4a68-b7f1-fb02a5b1-58c9-4989-942d-8a3578008009.png?raw=true)
 
 ### Example
 
@@ -490,7 +489,7 @@ The left-hand side of the string `jdk` is our key. Write out the cipher and writ
 
 To decipher Vigenère simply mark the row (Y-axis) at the index of the matching key character `j`. Then follow this row horizontally until you reach the cipher character `f`. Now mark this column (X-axis) and voilá the index on the x-axis is your clear-text character `W`. Repeat the previous steps for all characters in your cipher.
 
-![Vigenère square decipher](/media/challenge/png/a68a3ae2-5b84-4302-afa9-bd5c19852a12.png?raw=true)
+![Vigenère square decipher](/media/challenge/png/a68a3ae2-5b84-4302-afa9-ae328293-3995-449c-8139-8da92523d623.png?raw=true)
 
 ### Example
 
@@ -554,7 +553,7 @@ def solve_vigenere(challenge):
 
 Exclusive or is a logical operation indicating that of two given inputs only one of them has the value `true`.
 
-![XOR table](/media/challenge/png/d2c5d20a-6502-416e-959d-cbc621bea319.png?raw=true)
+![XOR table](/media/challenge/png/d2c5d20a-6502-416e-959d-6ebb3616-dffa-4b0e-bc10-c5ccdb2a47d0.png?raw=true)
 
 ### Example
 
