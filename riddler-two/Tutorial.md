@@ -28,13 +28,13 @@ This python3 programming exercise is about interacting with a `socket` service u
 
 ## Step 2
 ### Analysis of Riddler Two Service
-Riddler is a network services that is listening on port `443`. It is **not** https - but still running on port `443`!
+Riddler is a network service that is listening on port `443`. It is **not** https - but still running on port `443`!
 
 
 
 #### Manual Connection
 
-Before we start to write some code, we should make ourself familiar with the responses of *Riddler Two* by using `telnet` or `netcat`:
+Before you start to write some code, you should make yourself familiar with the responses of *Riddler Two* by using `telnet` or `netcat`:
 
 ``` python
 telnet [IP-Address] [Port]
