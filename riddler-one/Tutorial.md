@@ -52,7 +52,7 @@ Ncat: Version 7.80 ( https://nmap.org/ncat )
 Ncat: Connected to 152.96.6.243:80.
 19:MKTPEXW
 
-========= 3 ==========
+========= 2 ==========
 nc -v riddler.vm.vuln.land 80
 Ncat: Version 7.80 ( https://nmap.org/ncat )
 Ncat: Connected to 152.96.6.243:80.
@@ -65,14 +65,14 @@ Ncat: Connected to 152.96.6.243:80.
 16: DQDEJUSXDEBEWYUI
 ```
 
-As you can see in the three riddler responsese above, the rsponse is looks encrypted. Let's start to investigate the cipher furthermore using CrypTools.
+As you can see in the three riddler responses above, the response looks encrypted. Let's start to investigate the cipher furthermore using CrypTools.
 
 ## Step 3
 ### Analysis Riddler One Response
 #### CrypTools
 Start CrypTools, create a new file with *"File > New"* and paste the cipher `DQDEJUSXDEBEWYUI` into that new file. Fiddle around and try to solve it using the statistic functions of CrypTool.
 
-#### Spoiler
+#### Cipher
 The Riddler is sending its challenges encrypted using a symmetric encryption algorithm called **Caesar cipher**.
 
 The Caesar cipher is a monoalphabetic cipher which is based on a simple substitution of the characters by shifting each character the same amount over the alphabet.
@@ -194,5 +194,5 @@ To start using *pwntools* you can just import `pwn` as follows:
    ```
 
 ## Write a Python3 solver for the Riddler One Service
-Please finalize your work. Write python3 software that is connecting the riddler service using `pwntools` and solving the puzzles using `ceasar` shifts until the riddler service is sending the final string `CONGRATULATION! YOU DID IT!`
+Please finalize your work. Write python3 software that is connecting to the riddler service using `pwntools` and solves the puzzles using `caesar` shifts until the riddler service is sending the final string `CONGRATULATION! YOU DID IT!`
 
